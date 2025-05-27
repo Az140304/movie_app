@@ -16,7 +16,6 @@ class _MovieListScreenState extends State<MovieListScreen> implements MovieView 
   List<Movie> _movieList = [];
   String? _errorMessage;
   String _currentEndpoint = "movie";
-  //Map<String, dynamic> debut = _movieList!["genre"];
 
   int yes = 0;
   @override
@@ -54,6 +53,8 @@ class _MovieListScreenState extends State<MovieListScreen> implements MovieView 
               itemCount: _movieList.length,
               itemBuilder: (context, index) {
                 final movie = _movieList[index];
+                List<String> genres = List<String>.from(movie.genre);
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -77,7 +78,15 @@ class _MovieListScreenState extends State<MovieListScreen> implements MovieView 
                               movie.imgUrl,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
-                                return Image.network('https://placehold.co/600x400', fit: BoxFit.cover);
+                                print('Image failed to load: ${movie.imgUrl}');
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: Icon(
+                                    Icons.movie,
+                                    size: 50,
+                                    color: Colors.grey[600],
+                                  ),
+                                );
                               },
                             ),
                           ),
@@ -89,7 +98,7 @@ class _MovieListScreenState extends State<MovieListScreen> implements MovieView 
                             children: [
                               Text(movie.title, style: TextStyle(fontWeight: FontWeight.bold)),
                               Text(movie.rating),
-                              //Text(movie.genre, style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(movie.genre.join(', ')),
                               Text(movie.duration),
                               SizedBox(height: 4),
                             ],
