@@ -1,4 +1,4 @@
-# wibu_app
+# Movie_app
 
 A new Flutter project.
 
